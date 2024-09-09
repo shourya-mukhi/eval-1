@@ -1,0 +1,41 @@
+movies = {
+    "1": {"title": "Men In Black", "available": True},
+    "2": {"title": "Sinister", "available": True},
+    "3": {"title": "Mission Impossible", "available": True}
+}
+
+customers = {}
+
+rentals = []
+
+def rent_movie(customer_id, movie_id):
+    if movie_id in movies and movies[movie_id]["available"]:
+        movies[movie_id]["available"] = False
+        rentals.append({"customer_id": customer_id, "movie_id": movie_id})
+        print(f"Movie '{movies[movie_id]['title']}' rented to customer {customer_id}.")
+    else:
+        print("Movie not available for rent.")
+
+def return_movie(customer_id, movie_id):
+    if movie_id in movies and not movies[movie_id]["available"]:
+        movies[movie_id]["available"] = True
+        rentals.remove({"customer_id": customer_id, "movie_id": movie_id})
+        print(f"Movie '{movies[movie_id]['title']}' returned by customer {customer_id}.")
+    else:
+        print("Movie not found in rentals.")
+
+def generate_rental_report():
+    print("Rental Report:")
+    for rental in rentals:
+        customer_id = rental["customer_id"]
+        movie_id = rental["movie_id"]
+        print(f"Customer {customer_id} rented '{movies[movie_id]['title']}'.")
+        
+customers["1"] = {"name": "Shourya"}
+customers["2"] = {"name": "Ashish"}
+
+rent_movie("1", "1")
+rent_movie("2", "2")
+generate_rental_report()
+return_movie("1", "1")
+generate_rental_report()
